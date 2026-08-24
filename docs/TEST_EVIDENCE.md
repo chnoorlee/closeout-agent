@@ -14,10 +14,10 @@ container behavior; they do not establish a live Google Cloud deployment.
 | Production build | `npm run build` | Pass |
 | Browser journeys | `npm run e2e` | 2 passed, desktop and mobile |
 | PowerShell parser | Parses `scripts/deploy.ps1` without errors | Pass |
-| OCI image build | Locked `uv sync --locked --no-dev --no-editable` build | Pass, 112,516,748 bytes |
+| OCI image build | Locked `uv sync --locked --no-dev --no-editable` build | Pass, 112,512,936 bytes |
 | Container identity | `docker exec closeout-verification id` | Pass, non-root UID/GID 100/101 |
 | Container workflow | Health, run, metrics, ZIP, and manifest hash smoke | Pass, 8/8 manifest entries accounted for |
-| Container browser journeys | `E2E_BASE_URL=http://127.0.0.1:8082 npm run e2e` | 2 passed, desktop and mobile |
+| Container browser journeys | `$env:E2E_BASE_URL='http://127.0.0.1:8082'; npm run e2e` | 2 passed, desktop and mobile |
 
 The browser journey uploads three text artifacts, completes the five-stage
 workflow, verifies the 75% evidence score, one autonomous repair, two preserved
