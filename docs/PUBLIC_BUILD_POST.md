@@ -20,7 +20,7 @@ Closeout automates what it can prove and keeps everything else visibly blocked.
 
 Demo: `[PENDING_PUBLIC_VIDEO_URL]`
 
-Source: `[PENDING_GITHUB_URL]`
+Source: `https://github.com/chnoorlee/closeout-agent`
 
 App: `[PENDING_CLOUD_RUN_URL]`
 
