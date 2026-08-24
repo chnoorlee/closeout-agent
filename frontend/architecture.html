@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Closeout system architecture</title>
+    <style>
+      * { box-sizing: border-box; }
+      body { margin: 0; width: 1200px; height: 700px; display: grid; place-items: center; background: #f4f6f3; font-family: Inter, Arial, sans-serif; }
+      main { width: 1120px; height: 620px; padding: 42px 48px; border: 1px solid #dfe3de; border-radius: 8px; background: #fff; }
+      header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 34px; }
+      h1 { margin: 5px 0 0; color: #202429; font-size: 24px; letter-spacing: 0; }
+      p { margin: 0; color: #7a8186; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+      code { color: #697078; font-size: 11px; }
+      #diagram { height: 440px; display: grid; place-items: center; }
+      .mermaid { width: 100%; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div><p>Execution topology</p><h1>Closeout autonomous run</h1></div>
+        <code>Google ADK 2 / Gemini 3.5 Flash / Google Cloud</code>
+      </header>
+      <div id="diagram">
+        <pre class="mermaid">
+flowchart LR
+  UI["Operator console"] -->|"create run"| API["Cloud Run API"]
+  API -->|"persist"| DB[("Firestore")]
+  API -->|"enqueue"| TASKS["Cloud Tasks"]
+  TASKS --> FLOW["Intake · Map · Verify · Close · Seal"]
+  FLOW --> ADK["Google ADK 2"]
+  ADK --> GEMINI["Gemini 3.5 Flash"]
+  FLOW --> TOOLS["Bounded tools"]
+  FLOW --> DB
+  FLOW --> BUNDLE["Evidence bundle"]
+
+  classDef dark fill:#202429,color:#ffffff,stroke:#202429,stroke-width:1px;
+  classDef service fill:#ffffff,color:#202429,stroke:#cbd1cc,stroke-width:1px;
+  classDef ai fill:#e9f5ef,color:#116a4d,stroke:#66a98b,stroke-width:1px;
+  classDef artifact fill:#fbf1e1,color:#7b4c10,stroke:#d9a75f,stroke-width:1px;
+  class UI dark;
+  class API,DB,TASKS,FLOW,TOOLS service;
+  class ADK,GEMINI ai;
+  class BUNDLE artifact;
+        </pre>
+      </div>
+    </main>
+    <script type="module" src="/src/architecture.ts"></script>
+  </body>
+</html>

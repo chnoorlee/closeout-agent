@@ -1,0 +1,20 @@
+flowchart LR
+  UI["Operator console\nReact + Vite"] -->|"multipart upload or demo"| API["Public API + UI\nCloud Run"]
+  API -->|"run state"| DB[("Firestore\nruns + private inputs")]
+  API -->|"enqueue run"| TASKS["Cloud Tasks"]
+  TASKS -->|"authenticated callback"| FLOW["Five-stage workflow\nIntake / Map / Verify / Close / Seal"]
+  FLOW --> ADK["Google ADK 2"]
+  ADK --> GEMINI["Gemini 3.5 Flash"]
+  FLOW --> TOOLS["Bounded tools\nInventory / Scan / Validate / Manifest"]
+  FLOW --> DB
+  FLOW --> BUNDLE["Evidence ledger\nReproducible ZIP"]
+  BUNDLE --> UI
+
+  classDef edge fill:#202429,color:#ffffff,stroke:#202429,stroke-width:1px;
+  classDef service fill:#ffffff,color:#202429,stroke:#cfd4d0,stroke-width:1px;
+  classDef ai fill:#e9f5ef,color:#116a4d,stroke:#66a98b,stroke-width:1px;
+  classDef artifact fill:#fbf1e1,color:#7b4c10,stroke:#d9a75f,stroke-width:1px;
+  class UI edge;
+  class API,DB,TASKS,FLOW,TOOLS service;
+  class ADK,GEMINI ai;
+  class BUNDLE artifact;
