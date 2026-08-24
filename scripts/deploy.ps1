@@ -59,8 +59,10 @@ if (-not $activeAccount) {
 
 $runtimeAccountName = 'closeout-runtime'
 $taskAccountName = 'closeout-tasks'
+$buildAccountName = 'closeout-build'
 $runtimeAccount = "$runtimeAccountName@$ProjectId.iam.gserviceaccount.com"
 $taskAccount = "$taskAccountName@$ProjectId.iam.gserviceaccount.com"
+$buildAccount = "$buildAccountName@$ProjectId.iam.gserviceaccount.com"
 
 Invoke-Gcloud @('config', 'set', 'project', $ProjectId)
 Invoke-Gcloud @(
@@ -76,7 +78,8 @@ Invoke-Gcloud @(
 
 foreach ($account in @(
     @{ Name = $runtimeAccountName; Display = 'Closeout runtime' },
-    @{ Name = $taskAccountName; Display = 'Closeout task identity' }
+    @{ Name = $taskAccountName; Display = 'Closeout task identity' },
+    @{ Name = $buildAccountName; Display = 'Closeout source builder' }
 )) {
     $email = "$($account.Name)@$ProjectId.iam.gserviceaccount.com"
     if (-not (Test-GcloudResource @('iam', 'service-accounts', 'describe', $email, "--project=$ProjectId"))) {
@@ -87,6 +90,14 @@ foreach ($account in @(
         )
     }
 }
+
+Invoke-Gcloud @(
+    'projects', 'add-iam-policy-binding', $ProjectId,
+    "--member=serviceAccount:$buildAccount",
+    '--role=roles/run.builder',
+    '--condition=None',
+    '--quiet'
+)
 
 foreach ($role in @('roles/datastore.user', 'roles/aiplatform.user', 'roles/cloudtasks.enqueuer')) {
     Invoke-Gcloud @(
@@ -153,6 +164,7 @@ $workerEnvironment = "$commonEnvironment,CLOSEOUT_DISPATCHER=local"
 Invoke-Gcloud @(
     'run', 'deploy', $WorkerService,
     '--source=.',
+    "--build-service-account=projects/$ProjectId/serviceAccounts/$buildAccount",
     "--region=$Region",
     "--project=$ProjectId",
     "--service-account=$runtimeAccount",
@@ -216,3 +228,4 @@ Write-Host "Public URL: $publicUrl"
 Write-Host "Worker URL: $workerUrl"
 Write-Host "Runtime account: $runtimeAccount"
 Write-Host "Task identity: $taskAccount"
+Write-Host "Build identity: $buildAccount"

@@ -18,10 +18,12 @@ gcloud config set project YOUR_PROJECT_ID
 ```
 
 The script enables Vertex AI, Artifact Registry, Cloud Build, Cloud Tasks,
-Firestore, and Cloud Run; creates service identities and minimum role grants;
-creates the Firestore database and queue; deploys a private worker; grants only
-the task identity permission to invoke it; then deploys the public app from the
-same immutable image.
+Firestore, and Cloud Run; creates separate build, runtime, and task identities
+with minimum role grants; creates the Firestore database and queue; deploys a
+private worker; grants only the task identity permission to invoke it; then
+deploys the public app from the same immutable image. Source builds run as
+`closeout-build` with the Cloud Run Builder role instead of inheriting the
+project's default compute identity.
 
 ## Verify
 

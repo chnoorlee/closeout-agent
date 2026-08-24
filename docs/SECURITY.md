@@ -26,7 +26,9 @@
 - The API service is public; the worker requires authenticated Cloud Tasks OIDC.
 - The internal task execution route is not registered in the public service's
   Cloud Tasks dispatcher mode.
-- Separate runtime and task service accounts limit IAM scope.
+- Separate build, runtime, and task service accounts limit IAM scope. The build
+  identity has `roles/run.builder`; the default compute identity receives no
+  build access.
 - Firestore stores run state separately from private input artifacts.
 - Firestore delete protection is enabled by the deployment script.
 - Secrets are supplied through runtime credentials or environment configuration
