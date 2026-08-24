@@ -8,16 +8,17 @@ container behavior; they do not establish a live Google Cloud deployment.
 | Python lint | `uv run ruff check backend` | Pass |
 | Python types | `uv run mypy backend/app` | Pass |
 | Dependency consistency | `uv pip check` and `npm audit --omit=dev` | Pass, 0 incompatible packages and 0 vulnerabilities |
-| Backend behavior | `uv run pytest -W error --cov=backend.app --cov-report=term-missing` | 11 passed, 83% line coverage, no warnings |
+| Backend behavior | `uv run pytest -W error --cov=backend.app --cov-report=term-missing` | 12 passed, 84% line coverage, no warnings |
 | TypeScript | `npm run typecheck` | Pass |
 | Component tests | `npm test` | 1 passed |
 | Production build | `npm run build` | Pass |
 | Browser journeys | `npm run e2e` | 2 passed, desktop and mobile |
 | PowerShell parser | Parses `scripts/deploy.ps1` without errors | Pass |
-| OCI image build | Locked `uv sync --locked --no-dev --no-editable` build | Pass, 112,512,936 bytes |
+| OCI image build | Locked `uv sync --locked --no-dev --no-editable` build | Pass, 112,510,614 bytes |
 | Container identity | `docker exec closeout-verification id` | Pass, non-root UID/GID 100/101 |
 | Container workflow | Health, run, metrics, ZIP, and manifest hash smoke | Pass, 8/8 manifest entries accounted for |
 | Container browser journeys | `$env:E2E_BASE_URL='http://127.0.0.1:8082'; npm run e2e` | 2 passed, desktop and mobile |
+| Static asset containment | Traversal probes using raw and percent-encoded parent segments | Pass, all rejected with HTTP 404 while `/` remained HTTP 200 |
 
 The browser journey uploads three text artifacts, completes the five-stage
 workflow, verifies the 75% evidence score, one autonomous repair, two preserved
@@ -25,6 +26,8 @@ external blockers, and a downloadable ZIP. The mobile assertion uses a 390 x 844
 viewport and preserves all requirement, evidence, confidence, and verdict data.
 The container workflow independently recomputed the downloaded bundle SHA-256,
 then checked the byte length and SHA-256 of every file listed in `MANIFEST.json`.
+The final image was also probed with `curl --path-as-is` to ensure SPA fallback
+resolution cannot escape the built frontend directory.
 
 ## Evidence boundary
 

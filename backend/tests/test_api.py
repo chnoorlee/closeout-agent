@@ -1,11 +1,28 @@
 import io
 import time
 import zipfile
+from pathlib import Path
 
+import pytest
+from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
 from backend.app.config import Settings
-from backend.app.main import create_app
+from backend.app.main import create_app, resolve_static_file
+
+
+def test_static_file_resolution_cannot_escape_root(tmp_path: Path) -> None:
+    static_dir = tmp_path / "static"
+    static_dir.mkdir()
+    asset = static_dir / "asset.txt"
+    asset.write_text("public", encoding="utf-8")
+    (tmp_path / "secret.txt").write_text("private", encoding="utf-8")
+
+    assert resolve_static_file(static_dir, "asset.txt") == asset
+    assert resolve_static_file(static_dir, "missing.txt") is None
+    with pytest.raises(HTTPException) as error:
+        resolve_static_file(static_dir, "../secret.txt")
+    assert error.value.status_code == 404
 
 
 def test_health_discloses_demo_mode() -> None:

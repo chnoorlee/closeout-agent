@@ -20,6 +20,14 @@ class TaskPayload(BaseModel):
     run_id: str
 
 
+def resolve_static_file(static_dir: Path, requested_path: str) -> Path | None:
+    root = static_dir.resolve()
+    target = (root / requested_path).resolve()
+    if target != root and root not in target.parents:
+        raise HTTPException(status_code=404, detail="Static asset not found")
+    return target if requested_path and target.is_file() else None
+
+
 def create_app(settings: Settings | None = None) -> FastAPI:
     settings = settings or get_settings()
     app = FastAPI(title="Closeout API", version="0.1.0")
@@ -149,8 +157,8 @@ def create_app(settings: Settings | None = None) -> FastAPI:
 
         @app.get("/{path:path}", include_in_schema=False)
         async def spa(path: str) -> FileResponse:
-            target = static_dir / path
-            if path and target.is_file():
+            target = resolve_static_file(static_dir, path)
+            if target:
                 return FileResponse(target)
             return FileResponse(static_dir / "index.html")
 

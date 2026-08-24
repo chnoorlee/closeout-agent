@@ -19,10 +19,26 @@ param(
 
 $ErrorActionPreference = 'Stop'
 
+function Resolve-GcloudCommand {
+    $command = Get-Command gcloud -ErrorAction SilentlyContinue
+    if ($command) {
+        return $command.Source
+    }
+
+    $userInstall = Join-Path $env:LOCALAPPDATA 'Google\Cloud SDK\google-cloud-sdk\bin\gcloud.cmd'
+    if (Test-Path -LiteralPath $userInstall -PathType Leaf) {
+        return $userInstall
+    }
+
+    throw 'Google Cloud CLI is required. Install gcloud, then run gcloud auth login.'
+}
+
+$script:GcloudCommand = Resolve-GcloudCommand
+
 function Invoke-Gcloud {
     param([Parameter(Mandatory = $true)][string[]]$Arguments)
 
-    & gcloud @Arguments
+    & $script:GcloudCommand @Arguments
     if ($LASTEXITCODE -ne 0) {
         throw "gcloud failed: gcloud $($Arguments -join ' ')"
     }
@@ -31,15 +47,11 @@ function Invoke-Gcloud {
 function Test-GcloudResource {
     param([Parameter(Mandatory = $true)][string[]]$Arguments)
 
-    & gcloud @Arguments *> $null
+    & $script:GcloudCommand @Arguments *> $null
     return $LASTEXITCODE -eq 0
 }
 
-if (-not (Get-Command gcloud -ErrorAction SilentlyContinue)) {
-    throw 'Google Cloud CLI is required. Install gcloud, then run gcloud auth login.'
-}
-
-$activeAccount = & gcloud auth list '--filter=status:ACTIVE' '--format=value(account)' |
+$activeAccount = & $script:GcloudCommand auth list '--filter=status:ACTIVE' '--format=value(account)' |
     Select-Object -First 1
 if (-not $activeAccount) {
     throw 'No active Google Cloud account. Run gcloud auth login first.'
@@ -94,7 +106,7 @@ Invoke-Gcloud @(
     '--quiet'
 )
 
-$projectNumber = & gcloud projects describe $ProjectId '--format=value(projectNumber)'
+$projectNumber = & $script:GcloudCommand projects describe $ProjectId '--format=value(projectNumber)'
 if ($LASTEXITCODE -ne 0 -or -not $projectNumber) {
     throw "Could not resolve project number for $ProjectId"
 }
@@ -153,12 +165,12 @@ Invoke-Gcloud @(
     '--quiet'
 )
 
-$workerUrl = & gcloud run services describe $WorkerService `
+$workerUrl = & $script:GcloudCommand run services describe $WorkerService `
     "--region=$Region" "--project=$ProjectId" '--format=value(status.url)'
 if ($LASTEXITCODE -ne 0 -or -not $workerUrl) {
     throw "Could not resolve the $WorkerService URL"
 }
-$image = & gcloud run services describe $WorkerService `
+$image = & $script:GcloudCommand run services describe $WorkerService `
     "--region=$Region" "--project=$ProjectId" '--format=value(spec.template.spec.containers[0].image)'
 if ($LASTEXITCODE -ne 0 -or -not $image) {
     throw "Could not resolve the $WorkerService image"
@@ -192,7 +204,7 @@ Invoke-Gcloud @(
     '--quiet'
 )
 
-$publicUrl = & gcloud run services describe $Service `
+$publicUrl = & $script:GcloudCommand run services describe $Service `
     "--region=$Region" "--project=$ProjectId" '--format=value(status.url)'
 if ($LASTEXITCODE -ne 0 -or -not $publicUrl) {
     throw "Could not resolve the $Service URL"

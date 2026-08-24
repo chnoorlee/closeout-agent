@@ -9,6 +9,8 @@
   UTF-8 are rejected.
 - Uploaded artifacts are treated as data. Closeout never executes uploaded code
   or user-supplied shell commands.
+- SPA asset paths are resolved against the built frontend root. Parent-path
+  traversal is rejected with HTTP 404 before any file is served.
 
 ## Model boundary
 
