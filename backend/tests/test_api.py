@@ -8,6 +8,7 @@ from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
 from backend.app.config import Settings
+from backend.app.dispatcher import Dispatcher
 from backend.app.main import create_app, resolve_static_file
 
 
@@ -23,6 +24,30 @@ def test_static_file_resolution_cannot_escape_root(tmp_path: Path) -> None:
     with pytest.raises(HTTPException) as error:
         resolve_static_file(static_dir, "../secret.txt")
     assert error.value.status_code == 404
+
+
+def test_public_cloud_tasks_runtime_omits_worker_route(monkeypatch: pytest.MonkeyPatch) -> None:
+    class StubCloudDispatcher(Dispatcher):
+        name = "google-cloud-tasks"
+
+        async def dispatch(self, run_id: str) -> None:
+            del run_id
+
+    monkeypatch.setattr(
+        "backend.app.main.CloudTasksDispatcher", lambda settings: StubCloudDispatcher()
+    )
+    settings = Settings(
+        environment="production",
+        CLOSEOUT_STORE="memory",
+        CLOSEOUT_DISPATCHER="cloud-tasks",
+        GOOGLE_CLOUD_PROJECT="example-project",
+        CLOSEOUT_SERVICE_URL="https://worker.example.com",
+        CLOSEOUT_STAGE_DELAY_MS=0,
+    )
+
+    app = create_app(settings)
+
+    assert "/api/tasks/execute" not in app.openapi()["paths"]
 
 
 def test_health_discloses_demo_mode() -> None:

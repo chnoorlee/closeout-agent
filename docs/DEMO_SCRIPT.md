@@ -44,3 +44,18 @@ reproducible workflow.
 - Show the hosted URL, live Gemini mode, and Google Cloud evidence on screen.
 - Use a public YouTube or Vimeo link and verify it in a signed-out browser.
 - Do not splice local deterministic-demo footage as if it were the cloud run.
+
+## Reproducible app recording
+
+After the public deployment reports `live-gemini`, generate the application
+walkthrough with:
+
+```powershell
+$env:DEMO_BASE_URL = 'https://your-verified-cloud-run-url'
+Set-Location frontend
+npm run record:demo
+```
+
+The recorder refuses deterministic demo mode by default and writes
+`artifacts/demo/closeout-demo.webm`. Add a short Cloud Console shot and narration
+from the timeline above before publishing the final video.

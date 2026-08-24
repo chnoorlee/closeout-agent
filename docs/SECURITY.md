@@ -24,6 +24,8 @@
 ## Cloud boundary
 
 - The API service is public; the worker requires authenticated Cloud Tasks OIDC.
+- The internal task execution route is not registered in the public service's
+  Cloud Tasks dispatcher mode.
 - Separate runtime and task service accounts limit IAM scope.
 - Firestore stores run state separately from private input artifacts.
 - Firestore delete protection is enabled by the deployment script.

@@ -136,18 +136,20 @@ def create_app(settings: Settings | None = None) -> FastAPI:
             headers={"Content-Disposition": f'attachment; filename="closeout-{run.id}.zip"'},
         )
 
-    @app.post("/api/tasks/execute", status_code=202)
-    async def execute_task(
-        payload: TaskPayload,
-        x_closeout_task_secret: str | None = Header(default=None),
-        engine: CloseoutWorkflow = Depends(get_workflow),
-    ) -> dict[str, str]:
-        if settings.task_secret and not hmac.compare_digest(
-            x_closeout_task_secret or "", settings.task_secret
-        ):
-            raise HTTPException(status_code=401, detail="Invalid task credential")
-        await engine.process(payload.run_id)
-        return {"status": "accepted", "run_id": payload.run_id}
+    if not use_cloud_tasks:
+
+        @app.post("/api/tasks/execute", status_code=202)
+        async def execute_task(
+            payload: TaskPayload,
+            x_closeout_task_secret: str | None = Header(default=None),
+            engine: CloseoutWorkflow = Depends(get_workflow),
+        ) -> dict[str, str]:
+            if settings.task_secret and not hmac.compare_digest(
+                x_closeout_task_secret or "", settings.task_secret
+            ):
+                raise HTTPException(status_code=401, detail="Invalid task credential")
+            await engine.process(payload.run_id)
+            return {"status": "accepted", "run_id": payload.run_id}
 
     static_dir = Path(__file__).resolve().parents[1] / "static"
     if static_dir.exists():

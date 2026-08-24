@@ -7,6 +7,7 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "e2e": "playwright test",
+    "record:demo": "node scripts/record-demo.mjs",
     "test": "vitest run",
     "typecheck": "tsc -b --pretty false"
   },

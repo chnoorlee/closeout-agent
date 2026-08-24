@@ -44,6 +44,14 @@ test("completes and downloads an evidence-backed closeout", async ({ page }) => 
     path: "../docs/images/closeout-complete-desktop.png",
     fullPage: true,
   });
+
+  await page.getByRole("button", { name: "Run workspace" }).click();
+  await expect(page.getByRole("heading", { name: "Run briefing" })).toBeVisible();
+  await expect(page.locator('input[type="file"]')).toBeAttached();
+  await page.locator(".history-item").first().click();
+  await expect(page.getByText("Sealed and reproducible")).toBeVisible();
+  await page.getByRole("button", { name: "Bundles" }).click();
+  await expect(page.getByRole("link", { name: "Download bundle" })).toBeInViewport();
 });
 
 test("keeps the completed workspace coherent on mobile", async ({ page }) => {

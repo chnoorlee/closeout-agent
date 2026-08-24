@@ -139,7 +139,11 @@ function App() {
         </div>
 
         <nav className="primary-nav" aria-label="Workspace">
-          <button type="button" className="nav-item active">
+          <button
+            type="button"
+            className={`nav-item ${run ? "" : "active"}`}
+            onClick={() => setRun(null)}
+          >
             <Gauge aria-hidden="true" /> Run workspace
           </button>
           <button type="button" className="nav-item" onClick={() => document.querySelector("#ledger")?.scrollIntoView()}>
@@ -148,7 +152,12 @@ function App() {
           <button type="button" className="nav-item" onClick={() => document.querySelector("#activity")?.scrollIntoView()}>
             <Activity aria-hidden="true" /> Activity
           </button>
-          <button type="button" className="nav-item" disabled={!run?.bundle_ready}>
+          <button
+            type="button"
+            className="nav-item"
+            disabled={!run?.bundle_ready}
+            onClick={() => document.querySelector("#bundle")?.scrollIntoView()}
+          >
             <Box aria-hidden="true" /> Bundles
           </button>
         </nav>
@@ -389,7 +398,7 @@ function RunWorkspace({ run }: { run: Run }) {
         </aside>
       </div>
 
-      <section className={`bundle-strip ${run.bundle_ready ? "ready" : ""}`}>
+      <section id="bundle" className={`bundle-strip ${run.bundle_ready ? "ready" : ""}`}>
         <div className="bundle-icon"><Files aria-hidden="true" /></div>
         <div>
           <span className="section-kicker">Closeout bundle</span>
