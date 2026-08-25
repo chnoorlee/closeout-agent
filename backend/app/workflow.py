@@ -351,8 +351,10 @@ class CloseoutWorkflow:
             "Bound 8 obligations to inspectable artifacts",
             "closeout-agent",
         )
+        gate_summary = "gate remains" if run.metrics.blocked == 1 else "gates remain"
         summary = (
-            f"{run.metrics.repaired} gap repaired, {run.metrics.blocked} external gates remain"
+            f"{run.metrics.repaired} gap repaired, "
+            f"{run.metrics.blocked} external {gate_summary}"
         )
         await self._finish(run, "close", summary)
 

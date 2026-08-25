@@ -34,6 +34,41 @@ const context = await browser.newContext({
 });
 const page = await context.newPage();
 
+await page.setContent(`
+  <style>
+    * { box-sizing: border-box; }
+    html, body { margin: 0; width: 100%; height: 100%; }
+    body {
+      display: grid;
+      place-items: center;
+      background: #191c1f;
+      color: #f7f8f5;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    main { width: 720px; border-left: 3px solid #71d1a9; padding: 12px 0 12px 34px; }
+    span { color: #71d1a9; font-size: 13px; font-weight: 700; text-transform: uppercase; }
+    h1 { margin: 13px 0 8px; font-size: 58px; line-height: 1; }
+    p { margin: 0; color: #cbd0d3; font-size: 22px; }
+    small { display: block; margin-top: 30px; color: #8f989e; font-size: 13px; }
+    iframe { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+  </style>
+  <main>
+    <span>Taskmaster / Final submission</span>
+    <h1>Closeout</h1>
+    <p>Autonomous delivery operations</p>
+    <small>Live Gemini + Google ADK 2</small>
+  </main>
+  <iframe id="demo-warmup" title="Application warmup"></iframe>
+`);
+await page.locator("#demo-warmup").evaluate((element, url) => {
+  element.setAttribute("src", url);
+}, baseUrl);
+await page
+  .frameLocator("#demo-warmup")
+  .getByText("Runtime connected")
+  .waitFor({ timeout: 30_000 });
+await page.waitForTimeout(1800);
+
 async function caption(kicker, title, detail, duration = 4500) {
   await page.evaluate(
     ({ kickerText, titleText, detailText }) => {
@@ -147,8 +182,8 @@ try {
 
   await caption(
     "Honest completion",
-    "75% evidence coverage",
-    "Five requirements are verified, one reversible gap is repaired, and two external gates remain blocked.",
+    "88% evidence coverage",
+    "Six requirements are verified, one reversible gap is repaired, and one external gate remains blocked.",
     7000,
   );
   await page.getByRole("button", { name: "Requirements" }).click();

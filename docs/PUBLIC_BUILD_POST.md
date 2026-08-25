@@ -22,7 +22,7 @@ Demo: `[PENDING_PUBLIC_VIDEO_URL]`
 
 Source: `https://github.com/chnoorlee/closeout-agent`
 
-App: `[PENDING_CLOUD_RUN_URL]`
+App: `https://closeout-7ejjj4sb5a-uc.a.run.app`
 
 ## Social draft
 

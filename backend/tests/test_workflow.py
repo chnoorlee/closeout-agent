@@ -34,6 +34,8 @@ async def test_local_demo_preserves_external_cloud_blocker_and_seals_bundle() ->
     assert run.metrics.evidence_coverage == 75
     assert run.metrics.repaired == 1
     assert run.metrics.blocked == 2
+    close_stage = next(stage for stage in run.stages if stage.id == "close")
+    assert close_stage.summary == "1 gap repaired, 2 external gates remain"
     cloud = next(item for item in run.requirements if item.id == "cloud")
     assert cloud.verdict == Verdict.BLOCKED
     assert cloud.evidence == ["deployment.md#pending"]
@@ -78,6 +80,8 @@ async def test_cloud_runtime_evidence_closes_external_gate(monkeypatch: pytest.M
     assert run is not None
     assert run.metrics.evidence_coverage == 88
     assert run.metrics.blocked == 1
+    close_stage = next(stage for stage in run.stages if stage.id == "close")
+    assert close_stage.summary == "1 gap repaired, 1 external gate remains"
     cloud = next(item for item in run.requirements if item.id == "cloud")
     assert cloud.verdict == Verdict.VERIFIED
     assert cloud.evidence == ["deployment.md#runtime-verified"]

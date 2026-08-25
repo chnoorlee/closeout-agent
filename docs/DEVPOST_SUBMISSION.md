@@ -104,7 +104,7 @@ FastAPI, Pydantic, React, TypeScript, Vite, Playwright, Docker, and Python.
 
 ## Links
 
-- Try it: `[PENDING_CLOUD_RUN_URL]`
+- Try it: `https://closeout-7ejjj4sb5a-uc.a.run.app`
 - Source: `https://github.com/chnoorlee/closeout-agent`
 - Demo video: `[PENDING_PUBLIC_VIDEO_URL]`
 - Architecture diagram: `frontend/public/closeout-system.png`

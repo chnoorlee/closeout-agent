@@ -6,6 +6,10 @@ checks and repairs in the background, then seals a reproducible audit bundle.
 
 Built for the **Taskmaster** track of the 2026 All Things Agentic Hackathon.
 
+**Live app:** https://closeout-7ejjj4sb5a-uc.a.run.app
+
+**Source:** https://github.com/chnoorlee/closeout-agent
+
 ![Closeout completed run](docs/images/closeout-complete-desktop.png)
 
 ## Why it exists
@@ -128,10 +132,9 @@ Deployment and rollback details are in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 
 ## Evidence boundary
 
-The repository proves local behavior and contains the production deployment
-path. It does **not** by itself prove that Cloud Run is live, that a video is
-public, or that Devpost accepted the entry. Those claims stay pending until the
-corresponding external systems are checked.
+The public service and repository are live and independently verified. A public
+video and Devpost acceptance receipt are still external requirements; those
+claims remain pending until their corresponding systems confirm them.
 
 ## License
 

@@ -50,6 +50,17 @@ means rollback does not remove run evidence.
 
 ## Current status
 
-The local application and deployment script are verified. A public Cloud Run URL
-is pending an authenticated, billing-enabled project and must not be represented
-as complete until the live checks above pass.
+The production topology is live in `us-central1`:
+
+- Public app: `https://closeout-7ejjj4sb5a-uc.a.run.app`
+- Private worker: `https://closeout-worker-7ejjj4sb5a-uc.a.run.app`
+- Public revision: `closeout-00003-pd6`
+- Worker revision: `closeout-worker-00003-2px`
+- Verified run: `99dd0f732e31`
+
+The run completed in `live-gemini` mode through Cloud Tasks, persisted in
+Firestore, produced an 88% evidence score, and sealed bundle SHA-256
+`c82c08861c6a9931076865fea66bf18549d33c88fff293e0f137e98801dab6c0`.
+The worker returned HTTP 202 in 8.67 seconds and rejects anonymous calls with
+HTTP 403. Both services run the same immutable image digest,
+`sha256:5ea97cbbfaa1d83fe28d8dd95d05a301cfdb8860cec7b6bb564474c6436afb85`.

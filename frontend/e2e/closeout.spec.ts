@@ -5,12 +5,21 @@ test("completes and downloads an evidence-backed closeout", async ({ page }) => 
   await page.goto("/");
 
   await expect(page.getByText("Runtime connected")).toBeVisible();
+  const health = await page.request.get("/api/health");
+  expect(health.ok()).toBeTruthy();
+  const isLive = (await health.json()).ai_mode === "live-gemini";
+  const screenshotRoot = isLive ? "../docs/images" : "../artifacts/playwright";
+  const upload = page.locator('input[type="file"]');
+  if (!(await upload.isVisible())) {
+    await page.getByRole("button", { name: "Run workspace" }).click();
+  }
+  await expect(upload).toBeAttached();
   await page.screenshot({
-    path: "../docs/images/closeout-preflight-desktop.png",
+    path: `${screenshotRoot}/closeout-preflight-desktop.png`,
     fullPage: true,
   });
 
-  await page.locator('input[type="file"]').setInputFiles([
+  await upload.setInputFiles([
     {
       name: "README.md",
       mimeType: "text/markdown",
@@ -30,10 +39,17 @@ test("completes and downloads an evidence-backed closeout", async ({ page }) => 
   await expect(page.getByText("3 selected", { exact: true })).toBeVisible();
 
   await page.getByRole("button", { name: "Start closeout" }).click();
-  await expect(page.getByText("Sealed and reproducible")).toBeVisible();
-  await expect(page.getByLabel("Run metrics").getByText("75%", { exact: true })).toBeVisible();
+  await expect(page.getByText("Sealed and reproducible")).toBeVisible({ timeout: 120_000 });
+  await expect(
+    page.getByLabel("Run metrics").getByText(isLive ? "88%" : "75%", { exact: true }),
+  ).toBeVisible();
   await expect(page.getByText("8 obligations", { exact: true })).toBeVisible();
-  await expect(page.getByText("1 gap repaired, 2 external gates remain", { exact: true })).toBeVisible();
+  await expect(
+    page.getByText(
+      isLive ? "1 gap repaired, 1 external gate remains" : "1 gap repaired, 2 external gates remain",
+      { exact: true },
+    ),
+  ).toBeVisible();
 
   const downloadPromise = page.waitForEvent("download");
   await page.getByRole("link", { name: "Download bundle" }).click();
@@ -41,7 +57,7 @@ test("completes and downloads an evidence-backed closeout", async ({ page }) => 
   expect(download.suggestedFilename()).toMatch(/^closeout-[a-f0-9]+\.zip$/);
 
   await page.screenshot({
-    path: "../docs/images/closeout-complete-desktop.png",
+    path: `${screenshotRoot}/closeout-complete-desktop.png`,
     fullPage: true,
   });
 
@@ -59,15 +75,20 @@ test("keeps the completed workspace coherent on mobile", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.getByText("Runtime connected")).toBeVisible();
+  const health = await page.request.get("/api/health");
+  expect(health.ok()).toBeTruthy();
+  const isLive = (await health.json()).ai_mode === "live-gemini";
   const start = page.getByRole("button", { name: "Start closeout" });
   if (await start.isEnabled()) {
     await start.click();
-    await expect(page.getByText("Sealed and reproducible")).toBeVisible();
+    await expect(page.getByText("Sealed and reproducible")).toBeVisible({ timeout: 120_000 });
   }
   await expect(page.getByRole("link", { name: "Download bundle" })).toBeVisible();
 
   await page.screenshot({
-    path: "../docs/images/closeout-complete-mobile.png",
+    path: isLive
+      ? "../docs/images/closeout-complete-mobile.png"
+      : "../artifacts/playwright/closeout-complete-mobile.png",
     fullPage: true,
   });
 });
