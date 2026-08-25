@@ -23,7 +23,7 @@ with minimum role grants; creates the Firestore database and queue; deploys a
 private worker; grants only the task identity permission to invoke it; then
 deploys the public app from the same immutable image. Source builds run as
 `closeout-build` with the Cloud Run Builder role instead of inheriting the
-project's default compute identity.
+project's default compute identity for this build.
 
 ## Verify
 

@@ -49,7 +49,7 @@ class CloudTasksDispatcher(Dispatcher):
         if not settings.google_cloud_project or not settings.service_url:
             raise ValueError("Cloud Tasks requires project and service URL")
         self._settings = settings
-        self._client = tasks_v2.CloudTasksAsyncClient()
+        self._client = tasks_v2.CloudTasksClient()
         self._parent = self._client.queue_path(
             settings.google_cloud_project, settings.tasks_location, settings.tasks_queue
         )
@@ -82,4 +82,4 @@ class CloudTasksDispatcher(Dispatcher):
             ),
             http_request=request,
         )
-        await self._client.create_task(parent=self._parent, task=task)
+        await asyncio.to_thread(self._client.create_task, parent=self._parent, task=task)
