@@ -28,6 +28,7 @@ Verified locally on Windows and against the live Google Cloud deployment on
 | Live bundle | Download and independently hash ZIP plus manifest entries | Pass, bundle `c82c0886...` matched and 5/5 listed entries matched |
 | Live demo capture | `npm run record:demo` against the public URL | Pass, 81.68 seconds, 1280 x 720, raw SHA-256 `de5b852e...` |
 | Narrated demo media | `.\scripts\build-demo-media.ps1` | Pass, 81.68 seconds, VP8 + Opus, 5,059,817 bytes, SHA-256 `4f7a487a...` |
+| Public demo hosting | Anonymous YouTube player metadata, oEmbed, and `uvx --from yt-dlp yt-dlp --dump-single-json --skip-download https://youtu.be/E83TGwgERqE` | Pass, `availability=public`, `isUnlisted=false`, `isPrivate=false`, `playabilityStatus=OK`, 82 seconds |
 | Public CI | GitHub Actions `verify` for commit [`e3919b0`](https://github.com/chnoorlee/closeout-agent/commit/e3919b024b4ffecb2de73ba3354f59836b350031) | [Pass](https://github.com/chnoorlee/closeout-agent/actions/runs/32797802193), backend, frontend, and 2 browser journeys |
 
 The browser journey uploads three text artifacts, completes the five-stage
@@ -56,6 +57,6 @@ adding the Opus narration did not replace or re-encode the visual evidence.
 - **Verified:** deterministic local workflow, upload constraints, action
   allowlist, atomic processing leases, structured AI schema boundary, retries,
   stable ZIPs, responsive UI, public/private Cloud Run topology, Gemini 3.5 Flash
-  through Google ADK, Cloud Tasks dispatch, Firestore persistence, and public CI.
-- **Pending external proof:** public hosting for the locally verified demo video,
-  social post, and Devpost submission receipt.
+  through Google ADK, Cloud Tasks dispatch, Firestore persistence, public CI, and
+  public YouTube hosting for the 82-second narrated demo.
+- **Pending external proof:** social post and Devpost submission receipt.

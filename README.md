@@ -127,14 +127,15 @@ Deployment and rollback details are in [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md).
 - [Devpost copy](docs/DEVPOST_SUBMISSION.md)
 - [Demo script](docs/DEMO_SCRIPT.md)
 - [Public build post](docs/PUBLIC_BUILD_POST.md)
+- [Public demo video](https://youtu.be/E83TGwgERqE)
 - [Architecture source](docs/architecture.mmd)
 - [Acceptance contract](docs/ISSUE.md)
 
 ## Evidence boundary
 
-The public service and repository are live and independently verified. A public
-video and Devpost acceptance receipt are still external requirements; those
-claims remain pending until their corresponding systems confirm them.
+The public service, repository, and 82-second public demo video are live and
+independently verified. The Devpost acceptance receipt remains an external
+requirement until Devpost confirms the final submission.
 
 ## License
 

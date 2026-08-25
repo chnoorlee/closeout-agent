@@ -1,6 +1,6 @@
 # Devpost submission copy
 
-Replace only the bracketed external URLs after they have been opened and checked.
+The external links below were opened and checked before final submission.
 
 ## Project name
 
@@ -106,5 +106,5 @@ FastAPI, Pydantic, React, TypeScript, Vite, Playwright, Docker, and Python.
 
 - Try it: `https://closeout-7ejjj4sb5a-uc.a.run.app`
 - Source: `https://github.com/chnoorlee/closeout-agent`
-- Demo video: `[PENDING_PUBLIC_VIDEO_URL]`
+- Demo video: `https://youtu.be/E83TGwgERqE`
 - Architecture diagram: `frontend/public/closeout-system.png`

@@ -21,7 +21,7 @@ What I care about most is the evidence boundary: generating a video script does
 not prove a video is public, and a local build does not prove a cloud deployment.
 Closeout automates what it can prove and keeps everything else visibly blocked.
 
-Demo: `[PENDING_PUBLIC_VIDEO_URL]`
+Demo: `https://youtu.be/E83TGwgERqE`
 
 Source: `https://github.com/chnoorlee/closeout-agent`
 
@@ -33,7 +33,7 @@ Built Closeout: an autonomous last-mile agent that maps requirements to evidence
 performs policy-bounded repairs, and seals a reproducible audit bundle with Google
 ADK, Gemini 3.5 Flash, Cloud Run, Cloud Tasks, and Firestore.
 
-`[PENDING_PUBLIC_VIDEO_URL]`
+`https://youtu.be/E83TGwgERqE`
 
 #AllThingsAgenticHackathon
 

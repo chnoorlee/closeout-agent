@@ -43,7 +43,7 @@ workspace into a submission-ready, evidence-backed closeout bundle.
 - [x] A completed run exposes a requirement-to-evidence ledger and a downloadable
       ZIP whose manifest hashes match its contents.
 - [x] Local unit, API, frontend, build, and critical browser-journey checks pass.
-- [ ] A Cloud Run deployment is reachable and shows persistent Google Cloud
+- [x] A Cloud Run deployment is reachable and shows persistent Google Cloud
       execution evidence suitable for the demo video.
 - [x] The repository includes reproducible setup, a clear architecture
       diagram, testing instructions, licensing, and all required Devpost copy.
@@ -61,8 +61,12 @@ workspace into a submission-ready, evidence-backed closeout bundle.
 
 ## Status
 
-Local implementation and acceptance gates are complete. Cloud deployment,
-public-repository publication, public demo video, and final Devpost submission
+ready
+
+Current progress:
+
+Implementation, public Cloud deployment, repository publication, and the public
+demo video are verified. Final Devpost submission and its acceptance receipt
 remain external account gates.
 
 ## Execution Gate
