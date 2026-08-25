@@ -27,7 +27,7 @@ Verified locally on Windows and against the live Google Cloud deployment on
 | Task delivery | Cloud Run worker request log | Pass, HTTP 202 in 8.67 seconds on revision `closeout-worker-00003-2px` |
 | Live bundle | Download and independently hash ZIP plus manifest entries | Pass, bundle `c82c0886...` matched and 5/5 listed entries matched |
 | Live demo capture | `npm run record:demo` against the public URL | Pass, 74.08 seconds, 1280 x 720, 3,741,666 bytes, SHA-256 `c24a29ef...` |
-| Public CI | GitHub Actions `verify` for commit `2402050` | Pass, backend, frontend, and 2 browser journeys |
+| Public CI | GitHub Actions `verify` for commit [`e3919b0`](https://github.com/chnoorlee/closeout-agent/commit/e3919b024b4ffecb2de73ba3354f59836b350031) | [Pass](https://github.com/chnoorlee/closeout-agent/actions/runs/32797802193), backend, frontend, and 2 browser journeys |
 
 The browser journey uploads three text artifacts, completes the five-stage
 workflow, verifies the 75% evidence score, one autonomous repair, two preserved
