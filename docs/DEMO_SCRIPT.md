@@ -1,61 +1,63 @@
-# Demo script (3:45 target)
+# Demo script (1:22 final)
 
-## 0:00-0:25 - The last-mile problem
+The final submission video is one continuous capture of the public Cloud Run
+application. English captions are burned into the recording and an accurate
+English narration follows the same live workflow.
 
-Show a workspace with scattered requirements and evidence. Explain that a
-checklist can report gaps, but Closeout performs bounded closeout work and proves
-what it did.
+## Timeline
 
-## 0:25-0:50 - Architecture
+### 0:00-0:18 - Friction and live cloud proof
 
-Show the architecture image. Identify the public Cloud Run app, Firestore,
-Cloud Tasks, private worker, Google ADK, Gemini 3.5 Flash, and deterministic tool
-registry. Briefly show the live Cloud Run revision and Cloud Tasks execution.
+Introduce the last-mile delivery problem and Closeout. Show the public
+`.run.app` origin plus the Cloud Run, Cloud Tasks, private-worker, Firestore,
+Vertex AI, Gemini 3.5 Flash, and Google ADK 2 path.
 
-## 0:50-1:25 - Real intake
+### 0:18-0:33 - Bounded intake
 
-Open the hosted app. Point out the live runtime badge. Select a small README,
-requirements file, and architecture file, then start Closeout with one action.
+Show the five controlled stages and upload three bounded project artifacts. Explain
+that paths, file types, sizes, and encodings are validated before agent action.
 
-## 1:25-2:25 - Autonomous work
+### 0:33-0:51 - Autonomous execution
 
-Follow the five stages. Show Gemini's bounded plan, audit events, allowlisted
-actions, and one repaired internal gap. Emphasize that the workflow continues in
-the background and is safe to retry.
+Start Closeout once. Show Gemini's structured plan and explain that every side
+effect remains behind a deterministic, allowlisted tool boundary.
 
-## 2:25-3:05 - Honest evidence
+### 0:51-1:10 - Honest evidence and auditability
 
-Open the requirement ledger. Contrast verified, repaired, and blocked verdicts.
-Show that Closeout preserves an external blocker rather than manufacturing proof.
+Show the 88% result, requirement ledger, preserved public-video blocker, and
+retry-safe audit trail. A generated script or local build never becomes external
+proof.
 
-## 3:05-3:35 - Reproducible result
+### 1:10-1:22 - Reproducible result
 
-Download the ZIP. Open the manifest and ledger, then match one artifact's SHA-256.
-Show the Firestore run record and completed Cloud Task.
+Download the stable ZIP and show the evidence ledger, audit events, artifacts,
+and SHA-256 manifest.
 
-## 3:35-3:45 - Close
+## Rebuild the final media
 
-Closeout turns the fragile last mile into an autonomous, inspectable, and
-reproducible workflow.
+Record a fresh live run only after the public deployment reports `live-gemini`:
 
-## Recording gates
+```powershell
+$env:DEMO_BASE_URL = 'https://closeout-7ejjj4sb5a-uc.a.run.app'
+Set-Location frontend
+npm.cmd run record:demo
+Set-Location ..
+```
+
+Add the versioned narration without modifying the source capture:
+
+```powershell
+.\scripts\build-demo-media.ps1
+```
+
+This generates `artifacts/demo/closeout-demo-narrated.webm`. The narration source
+is `docs/demo-narration.ssml`.
+
+## Publication gates
 
 - Keep the published video at or below 4:00.
 - Show the hosted URL, live Gemini mode, and Google Cloud evidence on screen.
-- Use a public YouTube or Vimeo link and verify it in a signed-out browser.
-- Do not splice local deterministic-demo footage as if it were the cloud run.
-
-## Reproducible app recording
-
-After the public deployment reports `live-gemini`, generate the application
-walkthrough with:
-
-```powershell
-$env:DEMO_BASE_URL = 'https://your-verified-cloud-run-url'
-Set-Location frontend
-npm run record:demo
-```
-
-The recorder refuses deterministic demo mode by default and writes
-`artifacts/demo/closeout-demo.webm`. Add a short Cloud Console shot and narration
-from the timeline above before publishing the final video.
+- Verify both video and audio streams before upload.
+- Publish on YouTube or Vimeo as **Public**, not unlisted.
+- Verify playback in a signed-out browser before submitting the URL.
+- Do not splice local deterministic-demo footage into the cloud run.

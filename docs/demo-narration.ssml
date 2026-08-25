@@ -1,0 +1,35 @@
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xml:lang="en-US">
+  <break time="2500ms" />
+  High-stakes projects often fail in the last mile: requirements are scattered,
+  evidence is incomplete, and a checklist can only report the mess.
+  <break time="500ms" />
+  This is Closeout, an autonomous delivery operations agent running live on
+  Google Cloud.
+  <break time="500ms" />
+  The public Cloud Run application sends an authenticated Cloud Task to a
+  private worker. The worker uses Google A D K 2 and Gemini 3.5 Flash through
+  Vertex A I, while Firestore preserves durable run state.
+  <break time="500ms" />
+  Closeout validates a bounded workspace before any agent action. Three bounded
+  project artifacts enter the intake.
+  <break time="500ms" />
+  With one command, it maps obligations, verifies evidence, performs only
+  allowlisted reversible repairs, and seals the result. Gemini proposes the
+  plan, but deterministic policy controls every side effect.
+  <break time="500ms" />
+  The asynchronous worker completes in the background and reports eighty-eight
+  percent evidence coverage.
+  <break time="500ms" />
+  Six requirements are verified, one internal gap is repaired, and one public
+  video requirement remains honestly blocked. Closeout never turns a generated
+  script or a local build into external proof.
+  <break time="500ms" />
+  Every verdict links to its source and confidence. The audit trace records each
+  stage, actor, action, and retry-safe state transition.
+  <break time="500ms" />
+  Finally, Closeout produces a stable zip with the evidence ledger, audit
+  events, artifacts, and S H A 256 manifest.
+  <break time="500ms" />
+  Closeout is autonomous where actions are bounded, and honest where proof is
+  external.
+</speak>

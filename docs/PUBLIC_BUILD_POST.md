@@ -35,13 +35,15 @@ ADK, Gemini 3.5 Flash, Cloud Run, Cloud Tasks, and Firestore.
 
 `[PENDING_PUBLIC_VIDEO_URL]`
 
-#AllThingsAgentic Hackathon
+#AllThingsAgenticHackathon
 
 ## YouTube upload
 
 **Title:** Closeout - Autonomous Delivery Operations | All Things Agentic Hackathon
 
 **Visibility:** Public
+
+**Upload file:** `artifacts/demo/closeout-demo-narrated.webm`
 
 **Description:**
 
@@ -50,6 +52,7 @@ evidence, performs bounded repairs, preserves external blockers, and seals a
 reproducible audit bundle. This continuous live demo shows the public Cloud Run
 application dispatching an authenticated Cloud Task to a private worker using
 Google ADK 2 and Gemini 3.5 Flash, with durable state in Firestore.
+The video includes English narration and burned-in English captions.
 
 I created this video for the purposes of entering the All Things Agentic
 Hackathon.
@@ -58,4 +61,4 @@ Live app: https://closeout-7ejjj4sb5a-uc.a.run.app
 
 Source: https://github.com/chnoorlee/closeout-agent
 
-#AllThingsAgentic Hackathon
+#AllThingsAgenticHackathon

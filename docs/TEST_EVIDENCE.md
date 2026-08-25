@@ -26,7 +26,8 @@ Verified locally on Windows and against the live Google Cloud deployment on
 | Live agent workflow | Uploaded three real text artifacts | Pass, run `99dd0f732e31`, 88% coverage, Gemini/ADK event persisted |
 | Task delivery | Cloud Run worker request log | Pass, HTTP 202 in 8.67 seconds on revision `closeout-worker-00003-2px` |
 | Live bundle | Download and independently hash ZIP plus manifest entries | Pass, bundle `c82c0886...` matched and 5/5 listed entries matched |
-| Live demo capture | `npm run record:demo` against the public URL | Pass, 81.68 seconds, 1280 x 720, 4,057,540 bytes, SHA-256 `de5b852e...` |
+| Live demo capture | `npm run record:demo` against the public URL | Pass, 81.68 seconds, 1280 x 720, raw SHA-256 `de5b852e...` |
+| Narrated demo media | `.\scripts\build-demo-media.ps1` | Pass, 81.68 seconds, VP8 + Opus, 5,059,817 bytes, SHA-256 `4f7a487a...` |
 | Public CI | GitHub Actions `verify` for commit [`e3919b0`](https://github.com/chnoorlee/closeout-agent/commit/e3919b024b4ffecb2de73ba3354f59836b350031) | [Pass](https://github.com/chnoorlee/closeout-agent/actions/runs/32797802193), backend, frontend, and 2 browser journeys |
 
 The browser journey uploads three text artifacts, completes the five-stage
@@ -44,6 +45,11 @@ the manifest itself. The live demo was decoded in Chromium at seven points from
 the opening title through the sealed bundle and passed nonblank-frame checks.
 The continuous capture visibly identifies the public `.run.app` origin and the
 Cloud Run, Cloud Tasks, private-worker, Firestore, Vertex AI, and Gemini path.
+The narrated media decoded all 2,042 video frames and the complete audio stream.
+Chromium reported one video track, one audio track, `readyState=4`, and no media
+error during unmuted playback. The narration measured -21.0 dB mean and -2.8 dB
+peak volume. Its copied VP8 packet hash exactly matched the raw live capture, so
+adding the Opus narration did not replace or re-encode the visual evidence.
 
 ## Evidence boundary
 
