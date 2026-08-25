@@ -4,6 +4,7 @@ import { dirname, resolve } from "node:path";
 import { chromium } from "@playwright/test";
 
 const baseUrl = process.env.DEMO_BASE_URL;
+const deploymentOrigin = baseUrl ? new URL(baseUrl).origin : "";
 const outputPath = resolve(
   process.cwd(),
   process.env.DEMO_OUTPUT ?? "../artifacts/demo/closeout-demo.webm",
@@ -85,7 +86,7 @@ async function caption(kicker, title, detail, duration = 4500) {
         position: "fixed",
         zIndex: "9999",
         left: "28px",
-        bottom: "26px",
+        bottom: "70px",
         width: "min(560px, calc(100vw - 56px))",
         padding: "17px 20px",
         border: "1px solid #343a3f",
@@ -133,6 +134,12 @@ try {
   await page.getByRole("button", { name: "Run workspace" }).click();
   await page.getByRole("heading", { name: "Run briefing" }).waitFor();
 
+  await caption(
+    "Live Google Cloud proof",
+    deploymentOrigin.replace("https://", ""),
+    "Public Cloud Run -> Cloud Tasks -> authenticated private worker | Firestore | Vertex AI + Gemini 3.5 Flash",
+    7000,
+  );
   await caption(
     "Taskmaster track",
     "Closeout",

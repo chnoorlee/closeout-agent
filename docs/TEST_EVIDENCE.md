@@ -26,7 +26,7 @@ Verified locally on Windows and against the live Google Cloud deployment on
 | Live agent workflow | Uploaded three real text artifacts | Pass, run `99dd0f732e31`, 88% coverage, Gemini/ADK event persisted |
 | Task delivery | Cloud Run worker request log | Pass, HTTP 202 in 8.67 seconds on revision `closeout-worker-00003-2px` |
 | Live bundle | Download and independently hash ZIP plus manifest entries | Pass, bundle `c82c0886...` matched and 5/5 listed entries matched |
-| Live demo capture | `npm run record:demo` against the public URL | Pass, 74.08 seconds, 1280 x 720, 3,741,666 bytes, SHA-256 `c24a29ef...` |
+| Live demo capture | `npm run record:demo` against the public URL | Pass, 81.68 seconds, 1280 x 720, 4,057,540 bytes, SHA-256 `de5b852e...` |
 | Public CI | GitHub Actions `verify` for commit [`e3919b0`](https://github.com/chnoorlee/closeout-agent/commit/e3919b024b4ffecb2de73ba3354f59836b350031) | [Pass](https://github.com/chnoorlee/closeout-agent/actions/runs/32797802193), backend, frontend, and 2 browser journeys |
 
 The browser journey uploads three text artifacts, completes the five-stage
@@ -42,6 +42,8 @@ resolution cannot escape the built frontend directory. The final live bundle
 contained six ZIP members: five evidence files listed in `MANIFEST.json` plus
 the manifest itself. The live demo was decoded in Chromium at seven points from
 the opening title through the sealed bundle and passed nonblank-frame checks.
+The continuous capture visibly identifies the public `.run.app` origin and the
+Cloud Run, Cloud Tasks, private-worker, Firestore, Vertex AI, and Gemini path.
 
 ## Evidence boundary
 

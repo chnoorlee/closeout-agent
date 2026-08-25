@@ -4,6 +4,9 @@
 
 I built **Closeout** for the All Things Agentic Hackathon Taskmaster track.
 
+I created this piece of content for the purposes of entering the All Things
+Agentic Hackathon.
+
 Closeout is an autonomous last-mile agent for high-stakes deliverables. It takes
 a fragmented project workspace, maps requirements to evidence, runs bounded
 checks and reversible repairs, preserves external blockers, and seals the result
@@ -32,7 +35,27 @@ ADK, Gemini 3.5 Flash, Cloud Run, Cloud Tasks, and Firestore.
 
 `[PENDING_PUBLIC_VIDEO_URL]`
 
-#AllThingsAgentic
+#AllThingsAgentic Hackathon
 
-Confirm the exact event hashtag and bonus-post rules on the live submission form
-before publishing.
+## YouTube upload
+
+**Title:** Closeout - Autonomous Delivery Operations | All Things Agentic Hackathon
+
+**Visibility:** Public
+
+**Description:**
+
+Closeout is an autonomous last-mile agent that maps project requirements to
+evidence, performs bounded repairs, preserves external blockers, and seals a
+reproducible audit bundle. This continuous live demo shows the public Cloud Run
+application dispatching an authenticated Cloud Task to a private worker using
+Google ADK 2 and Gemini 3.5 Flash, with durable state in Firestore.
+
+I created this video for the purposes of entering the All Things Agentic
+Hackathon.
+
+Live app: https://closeout-7ejjj4sb5a-uc.a.run.app
+
+Source: https://github.com/chnoorlee/closeout-agent
+
+#AllThingsAgentic Hackathon
