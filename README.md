@@ -10,14 +10,17 @@ Built for the **Taskmaster** track of the 2026 All Things Agentic Hackathon.
 
 **Source:** https://github.com/chnoorlee/closeout-agent
 
+**Demo:** https://youtu.be/E83TGwgERqE
+
 ![Closeout completed run](docs/images/closeout-complete-desktop.png)
 
 ## Why it exists
 
-The final 10% of a serious deliverable is fragmented across requirement files,
-repositories, verification output, external links, and packaging steps. A static
-checklist describes those gaps but cannot close them. Closeout turns the last mile
-into a five-stage autonomous workflow:
+Closeout started with our own Bring Your Own Friction problem: closing a serious
+hackathon entry whose requirements, repository, cloud execution, video, and
+external submission gates all lived in different places. A static checklist can
+describe those gaps but cannot close them or prove what happened. Closeout turns
+that last mile into a five-stage autonomous workflow:
 
 1. **Intake** inventories supplied artifacts without executing uploaded content.
 2. **Map** uses Google ADK and Gemini 3.5 Flash to propose an evidence plan.

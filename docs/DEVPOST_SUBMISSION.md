@@ -23,18 +23,26 @@ in logs and repositories, external gates are easy to overclaim, and the final
 package is assembled manually under deadline pressure. Static checklists can
 describe this problem, but they cannot finish the work or prove what happened.
 
+Our Bring Your Own Friction was this hackathon closeout itself. We had a live
+application, cloud execution logs, a repository, submission rules, and a demo
+video, but no single system could determine what was actually proven, close safe
+gaps, and refuse to overclaim the remaining external steps. The twist is that
+Closeout does not generate another checklist: it operates on the delivery process
+and packages the proof.
+
 We built Closeout to act like a rigorous release operator: autonomous where the
 action is bounded and reversible, and deliberately honest where proof depends on
 an external system or a human owner.
 
 ## What it does
 
-Closeout ingests a small text workspace and runs an event-driven, five-stage
-workflow in the background: Intake, Map, Verify, Close, and Seal. It inventories
-artifacts, maps obligations to evidence, uses Gemini to propose a structured plan,
-executes only policy-approved tools, repairs reversible gaps, and preserves real
-external blockers. It then produces a requirement-to-evidence ledger and a
-reproducible ZIP with SHA-256 hashes for every payload artifact.
+One action starts Closeout's event-driven, five-stage background workflow:
+Intake, Map, Verify, Close, and Seal. For bounded work, it completes the workflow
+without follow-up intervention. Closeout inventories artifacts, maps obligations to
+evidence, uses Gemini to propose a structured plan, executes only policy-approved
+tools, repairs reversible gaps, and preserves real external blockers. It finishes
+with a requirement-to-evidence ledger and a reproducible ZIP containing SHA-256
+hashes for every payload artifact.
 
 The operator console makes autonomy inspectable. Every stage, actor, action,
 evidence source, confidence score, and blocker is visible. A generated video
@@ -47,7 +55,7 @@ difference between an artifact and an externally verified fact.
 The public application is a React and TypeScript console served by a FastAPI
 service on Cloud Run. Firestore stores durable run state and private inputs in
 separate collections. Cloud Tasks dispatches authenticated, at-least-once jobs to
-a private Cloud Run worker.
+an IAM-only private Cloud Run worker using OIDC service-account identity.
 
 The worker uses Google Agent Development Kit 2 with Gemini 3.5 Flash. Gemini must
 return a Pydantic-validated plan whose actions come from a closed literal set.
@@ -80,6 +88,11 @@ saved and re-raised, and bundle generation is byte-reproducible.
 - Reversible gaps are repaired while external blockers remain visible.
 - Identical inputs produce identical audited bundle bytes.
 - The complete operator journey is tested on desktop and mobile.
+- A production run processed three real artifacts through all five stages,
+  reached 88% evidence coverage, performed one bounded repair, preserved the
+  remaining external blocker, and sealed a manifest-verified ZIP.
+- The public application, private worker, Cloud Task delivery, Firestore state,
+  live Gemini/ADK event, and downloadable bundle were independently verified.
 
 ## What we learned
 
@@ -107,4 +120,22 @@ FastAPI, Pydantic, React, TypeScript, Vite, Playwright, Docker, and Python.
 - Try it: `https://closeout-7ejjj4sb5a-uc.a.run.app`
 - Source: `https://github.com/chnoorlee/closeout-agent`
 - Demo video: `https://youtu.be/E83TGwgERqE`
-- Architecture diagram: `frontend/public/closeout-system.png`
+- Architecture diagram: `https://github.com/chnoorlee/closeout-agent/blob/main/frontend/public/closeout-system.png`
+
+## Optional developer contributions
+
+- Public build content: `https://youtu.be/E83TGwgERqE` (Public, not unlisted;
+  its description states that it was created for entering this hackathon.)
+- Social post: use the reviewed draft in `docs/PUBLIC_BUILD_POST.md` only after
+  publishing it from the entrant's X, LinkedIn, Instagram, or Facebook account.
+
+## Final account checklist
+
+- Project name: `Closeout`
+- Track/category: `Taskmaster`
+- Try-it URL: `https://closeout-7ejjj4sb5a-uc.a.run.app`
+- Repository URL: `https://github.com/chnoorlee/closeout-agent`
+- Video URL: `https://youtu.be/E83TGwgERqE`
+- Upload the architecture image from `frontend/public/closeout-system.png`.
+- Add the public build-content URL above to the optional contribution field.
+- Review eligibility and legal attestations as the account owner, then submit.
