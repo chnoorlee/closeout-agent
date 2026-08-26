@@ -9,14 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: astral-sh/setup-uv@v6
+      - uses: astral-sh/setup-uv@v10.0.1
         with:
           python-version: "3.12"
           enable-cache: true
+          prune-cache: false
 
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "24"
           cache: npm
@@ -43,8 +44,10 @@ jobs:
 
       - name: Start application
         run: |
-          .venv/bin/python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8081 > backend.log 2>&1 &
-          npm --prefix frontend run dev -- --host 127.0.0.1 --port 5173 > frontend.log 2>&1 &
+          setsid .venv/bin/python -m uvicorn backend.app.main:app --host 127.0.0.1 --port 8081 > backend.log 2>&1 &
+          echo "BACKEND_PID=$!" >> "$GITHUB_ENV"
+          setsid npm --prefix frontend run dev -- --host 127.0.0.1 --port 5173 > frontend.log 2>&1 &
+          echo "FRONTEND_PID=$!" >> "$GITHUB_ENV"
           for attempt in {1..30}; do
             curl --fail --silent http://127.0.0.1:8081/api/health && break
             sleep 1
@@ -55,9 +58,18 @@ jobs:
       - name: Verify browser journeys
         run: npm --prefix frontend run e2e
 
+      - name: Stop application
+        if: always()
+        run: |
+          for pid in "${BACKEND_PID:-}" "${FRONTEND_PID:-}"; do
+            if [ -n "$pid" ]; then
+              kill -TERM -- "-$pid" 2>/dev/null || true
+            fi
+          done
+
       - name: Upload browser evidence
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: browser-evidence
           path: |
